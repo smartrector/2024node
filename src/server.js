@@ -84,6 +84,34 @@ const server = async function () {
       }
     });
 
+    //app.put("",function(){})
+    app.put("/user/:userId", async function (req, res) {
+      try {
+        let {userId} = req.params;
+        if (!mongoose.isValidObjectId(userId)) {
+          return res.status(400).send({error: "유저가 없네요!!!!!"});
+        }
+
+        let {age} = req.body;
+        //age value 확인
+        if (!age) {
+          return res.status(400).send({error: "나이입력해주세요"});
+        }
+        if (typeof age !== "number") {
+          return res.status(400).send({error: "숫자입력해주세요"});
+        }
+
+        const user = await User.findByIdAndUpdate(
+          userId,
+          {$set: {age}},
+          {new: true} // 화면에서 바로반영
+        );
+        return res.send({user});
+      } catch (error) {
+        return res.status(500).send({error: error.message});
+      }
+    });
+
     app.listen(3000);
   } catch (error) {
     console.log("잘못연결");
