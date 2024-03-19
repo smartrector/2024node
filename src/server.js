@@ -68,6 +68,22 @@ const server = async function () {
       }
     });
 
+    app.delete("/user/:userId", async function (req, res) {
+      try {
+        //  let userId = req.params.userId
+        let {userId} = req.params;
+
+        if (!mongoose.isValidObjectId(userId)) {
+          return res.status(400).send({error: "유저가 없네요!!!!!"});
+        }
+
+        const user = await User.findByIdAndDelete({_id: userId});
+        return res.send({user});
+      } catch (error) {
+        return res.status(500).send({error: error.message});
+      }
+    });
+
     app.listen(3000);
   } catch (error) {
     console.log("잘못연결");
