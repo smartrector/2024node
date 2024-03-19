@@ -1,12 +1,12 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+
 const {User} = require("./model/User.js");
+const dotenv = require("dotenv");
 
-const users = [];
-
-const MONGO_URL =
-  "mongodb+srv://winoz:Fkv4rwcWwEnd7F6N@mongodb.irqbksa.mongodb.net/book?retryWrites=true&w=majority&appName=Mongodb";
+dotenv.config();
+//process.env.MONGO_URL
 
 // let result = mongoose.connect(MONGO_URL);
 // console.log(result);
@@ -24,7 +24,7 @@ const MONGO_URL =
 
 const server = async function () {
   try {
-    await mongoose.connect(MONGO_URL); //promis
+    await mongoose.connect(process.env.MONGO_URL); //promise
     console.log("db connected");
     app.use(express.json());
 
