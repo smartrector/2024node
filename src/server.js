@@ -33,7 +33,6 @@ const server = async function () {
 
     app.get("/user", async function (req, res) {
       //1
-      //return res.send({user: users});
       try {
         const users = await User.find({});
         return res.send({users});
