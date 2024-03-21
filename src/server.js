@@ -1,11 +1,13 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 const {User} = require("./model/User.js");
 const dotenv = require("dotenv");
 
 dotenv.config();
+
 //process.env.MONGO_URL
 
 // let result = mongoose.connect(MONGO_URL);
@@ -26,6 +28,7 @@ const server = async function () {
   try {
     await mongoose.connect(process.env.MONGO_URL); //promise
     console.log("db connected");
+    app.use(cors());
     app.use(express.json());
 
     app.get("/user", async function (req, res) {
