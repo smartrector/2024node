@@ -31,6 +31,10 @@ const server = async function () {
     app.use(cors());
     app.use(express.json());
 
+    app.get("/", (req, res) => {
+      res.send("<h1>Hello World!</h1>");
+    });
+
     app.get("/user", async function (req, res) {
       //1
       try {
